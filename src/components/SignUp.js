@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 import '../styles/signup.css';
 
@@ -7,18 +8,27 @@ const SignUp = () => {
   const passwordRef = useRef();
   const passwordConfRef = useRef();
 
-  const [error, setError] = useState('');
+  const { signup } = useAuth();
 
-  const handleSubmit = (e) => {
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // TODO check if password is long enough
     // check if passwords match
     if (passwordRef.current.value !== passwordConfRef.current.value) {
       return setError('Passwords do not match');
     }
 
-    error && setError('');
-    console.log('success');
-    console.log(emailRef.current.value);
+    try {
+      error && setError('');
+      setLoading(true);
+      await signup(emailRef.current.value, passwordRef.current.value);
+    } catch {
+      setError('Failed to create an account');
+    }
+    setLoading(false);
   };
 
   return (
@@ -41,7 +51,9 @@ const SignUp = () => {
           <input type="password" required ref={passwordConfRef}></input>
         </div>
 
-        <button type="submit">Sign Up</button>
+        <button disabled={loading} type="submit">
+          Sign Up
+        </button>
       </form>
       <div>Already have an account? Sign-In</div>
     </div>
