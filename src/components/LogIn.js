@@ -40,14 +40,18 @@ const Login = () => {
         <h2>Log In</h2>
         {error && <div className="error">{error}</div>}
         <form onSubmit={handleSubmit} className="sign-up-form">
-          <div>
-            <label>Email</label>
-            <input type="email" required ref={emailRef}></input>
+          <div className="form-div">
+            <label>
+              Email
+              <input type="email" required ref={emailRef}></input>
+            </label>
           </div>
 
-          <div>
-            <label>Password</label>
-            <input type="password" required ref={passwordRef}></input>
+          <div className="form-div">
+            <label>
+              Password
+              <input type="password" required ref={passwordRef}></input>
+            </label>
           </div>
 
           <button disabled={loading} type="submit">

@@ -8,6 +8,8 @@ const SignUp = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfRef = useRef();
+  const firstNameRef = useRef();
+  const lastNameRef = useRef();
 
   const { signup } = useAuth();
 
@@ -25,7 +27,12 @@ const SignUp = () => {
     try {
       error && setError('');
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
+      await signup(
+        emailRef.current.value,
+        passwordRef.current.value,
+        firstNameRef.current.value,
+        lastNameRef.current.value
+      );
     } catch {
       setError('Failed to create an account');
     }
@@ -42,19 +49,34 @@ const SignUp = () => {
         <h2>Sign Up</h2>
         {error && <div className="error">{error}</div>}
         <form onSubmit={handleSubmit} className="sign-up-form">
-          <div>
-            <label>Email</label>
-            <input type="email" required ref={emailRef}></input>
+          <div className="form-div">
+            <label>
+              <div>First Name</div>
+              <input type="text" required ref={firstNameRef}></input>
+            </label>
+
+            <label>
+              <div>Last Name</div>
+              <input type="text" required ref={lastNameRef}></input>
+            </label>
+          </div>
+          <div className="form-div">
+            <label>
+              <div>Email</div>
+              <input type="email" required ref={emailRef}></input>
+            </label>
           </div>
 
-          <div>
-            <label>Password</label>
-            <input type="password" required ref={passwordRef}></input>
-          </div>
+          <div className="form-div">
+            <label>
+              <div>Password</div>
+              <input type="password" required ref={passwordRef}></input>
+            </label>
 
-          <div>
-            <label>Confirm Password</label>
-            <input type="password" required ref={passwordConfRef}></input>
+            <label>
+              <div>Confirm password</div>
+              <input type="password" required ref={passwordConfRef}></input>
+            </label>
           </div>
 
           <button disabled={loading} type="submit">

@@ -38,9 +38,11 @@ const ForgotPassword = () => {
         {error && <div className="error">{error}</div>}
         {message && <div className="message">{message}</div>}
         <form onSubmit={handleSubmit} className="sign-up-form">
-          <div>
-            <label>Email</label>
-            <input type="email" required ref={emailRef}></input>
+          <div className="form-div">
+            <label>
+              Email
+              <input type="email" required ref={emailRef}></input>
+            </label>
           </div>
 
           <button disabled={loading} type="submit">
