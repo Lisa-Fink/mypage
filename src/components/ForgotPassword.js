@@ -32,25 +32,27 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="sign-up">
-      <h2>Reset Password</h2>
-      {error && <div className="error">{error}</div>}
-      {message && <div className="message">{message}</div>}
-      <form onSubmit={handleSubmit} className="sign-up-form">
-        <div>
-          <label>Email</label>
-          <input type="email" required ref={emailRef}></input>
-        </div>
+    <div className="sign-container">
+      <div className="sign-up">
+        <h2>Reset Password</h2>
+        {error && <div className="error">{error}</div>}
+        {message && <div className="message">{message}</div>}
+        <form onSubmit={handleSubmit} className="sign-up-form">
+          <div>
+            <label>Email</label>
+            <input type="email" required ref={emailRef}></input>
+          </div>
 
-        <button disabled={loading} type="submit">
-          Reset Password
-        </button>
-      </form>
-      <div>
-        <Link to="/login">Login</Link>
-      </div>
-      <div>
-        Need an account? <Link to="/signup">Sign-up</Link>
+          <button disabled={loading} type="submit">
+            Reset Password
+          </button>
+        </form>
+        <div>
+          <Link to="/login">Login</Link>
+        </div>
+        <div>
+          Need an account? <Link to="/signup">Sign-up</Link>
+        </div>
       </div>
     </div>
   );

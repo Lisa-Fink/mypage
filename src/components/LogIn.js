@@ -31,29 +31,35 @@ const Login = () => {
   };
 
   return (
-    <div className="sign-up">
-      <h2>Log In</h2>
-      {error && <div className="error">{error}</div>}
-      <form onSubmit={handleSubmit} className="sign-up-form">
-        <div>
-          <label>Email</label>
-          <input type="email" required ref={emailRef}></input>
-        </div>
-
-        <div>
-          <label>Password</label>
-          <input type="password" required ref={passwordRef}></input>
-        </div>
-
-        <button disabled={loading} type="submit">
-          Log In
-        </button>
-      </form>
-      <div>
-        <Link to="/forgot-password">Forgot Password?</Link>
+    <div className="sign-container">
+      <div className="sign-left">
+        <h1>MyPage</h1>
+        <h2>Connect with the world on MyPage.</h2>
       </div>
-      <div>
-        Need an account? <Link to="/signup">Sign-up</Link>
+      <div className="sign-up">
+        <h2>Log In</h2>
+        {error && <div className="error">{error}</div>}
+        <form onSubmit={handleSubmit} className="sign-up-form">
+          <div>
+            <label>Email</label>
+            <input type="email" required ref={emailRef}></input>
+          </div>
+
+          <div>
+            <label>Password</label>
+            <input type="password" required ref={passwordRef}></input>
+          </div>
+
+          <button disabled={loading} type="submit">
+            Log In
+          </button>
+        </form>
+        <div>
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </div>
+        <div>
+          Need an account? <Link to="/signup">Sign-up</Link>
+        </div>
       </div>
     </div>
   );

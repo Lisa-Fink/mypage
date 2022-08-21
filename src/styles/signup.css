@@ -1,7 +1,20 @@
+.sign-container {
+    display: flex;
+    justify-content: center;
+    gap:100px;
+    align-items: center;
+}
+
+.sign-left > h1 {
+    font-size: 50px;
+    color: rgb(0, 90, 100);
+}
+
 .sign-up {
     min-width: 240px;
     max-width: fit-content;
     border: 2px grey solid;
+    border-radius: 10px;
     padding: 40px;
 }
 
@@ -15,20 +28,32 @@
 
 .sign-up > h2 {
     font-size: 42px;
+    color:rgb(0, 90, 100);
 }
 
 .sign-up-form input {
     max-width: 400px;
     min-width: 180px;
     margin-bottom: 20px;
-    padding: 4px;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
 }
 
 .sign-up-form button {
     max-width: 400px;
     min-width: 190px;
-    padding: 4px;
+    padding: 8px;
     font-size: 18px;
+    background-color: rgb(0, 90, 100);
+    color: rgb(231,231,231);
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+}
+
+.sign-up-form button:hover {
+    background-color: rgb(0, 50, 56);
 }
 
 .sign-up-form > div {
@@ -36,3 +61,13 @@
     flex-direction: column;
     align-items: flex-start;
 }
+
+.sign-up a {
+   color: rgb(0, 90, 100);
+   text-decoration: none;
+}
+
+.sign-up a:hover{
+    text-decoration: underline;
+}
+

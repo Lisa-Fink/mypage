@@ -33,31 +33,37 @@ const SignUp = () => {
   };
 
   return (
-    <div className="sign-up">
-      <h2>Sign Up</h2>
-      {error && <div className="error">{error}</div>}
-      <form onSubmit={handleSubmit} className="sign-up-form">
-        <div>
-          <label>Email</label>
-          <input type="email" required ref={emailRef}></input>
-        </div>
+    <div className="sign-container">
+      <div className="sign-left">
+        <h1>MyPage</h1>
+        <h2>Connect with the world on MyPage.</h2>
+      </div>
+      <div className="sign-up">
+        <h2>Sign Up</h2>
+        {error && <div className="error">{error}</div>}
+        <form onSubmit={handleSubmit} className="sign-up-form">
+          <div>
+            <label>Email</label>
+            <input type="email" required ref={emailRef}></input>
+          </div>
 
-        <div>
-          <label>Password</label>
-          <input type="password" required ref={passwordRef}></input>
-        </div>
+          <div>
+            <label>Password</label>
+            <input type="password" required ref={passwordRef}></input>
+          </div>
 
-        <div>
-          <label>Confirm Password</label>
-          <input type="password" required ref={passwordConfRef}></input>
-        </div>
+          <div>
+            <label>Confirm Password</label>
+            <input type="password" required ref={passwordConfRef}></input>
+          </div>
 
-        <button disabled={loading} type="submit">
-          Sign Up
-        </button>
-      </form>
-      <div>
-        Already have an account? <Link to="/login">Sign-In</Link>
+          <button disabled={loading} type="submit">
+            Sign Up
+          </button>
+        </form>
+        <div>
+          Already have an account? <Link to="/login">Sign-In</Link>
+        </div>
       </div>
     </div>
   );
