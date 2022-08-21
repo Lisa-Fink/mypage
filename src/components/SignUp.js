@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 import '../styles/signup.css';
 
@@ -55,7 +56,9 @@ const SignUp = () => {
           Sign Up
         </button>
       </form>
-      <div>Already have an account? Sign-In</div>
+      <div>
+        Already have an account? <Link to="/login">Sign-In</Link>
+      </div>
     </div>
   );
 };
