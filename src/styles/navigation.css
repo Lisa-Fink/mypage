@@ -25,7 +25,7 @@ nav > div > h2 {
     margin: 15px 10px 15px 10px;
 }
 
-#user-div > div:hover{
+#user-div > div:hover, #user-menu >div>a:hover, #user-menu >div>button:hover{
     color: grey;
     cursor: pointer;
 }
@@ -36,8 +36,41 @@ nav > div > h2 {
     border-radius: 60px;
 }
 
-.user-info {
+#user-info-nav {
     display: flex;
     align-items: center;
     gap: 20px;
 }
+
+#user-menu {
+    position:fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px 10px 20px 10px;
+    width: 160px;
+    background-color: rgb(0, 90, 100);
+    border: 1px rgb(0, 100, 110) solid;
+    border-top: 0px solid
+}
+
+#user-info {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+}
+
+#user-menu a {
+    text-decoration: none;
+    color:rgb(231, 231, 231);
+}
+
+#user-menu > div>button {
+    color:rgb(231, 231, 231);
+    background: none;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
