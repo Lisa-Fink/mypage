@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import '../styles/signup.css';
 
@@ -15,6 +15,8 @@ const SignUp = () => {
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ const SignUp = () => {
         firstNameRef.current.value,
         lastNameRef.current.value
       );
+      navigate('/');
     } catch {
       setError('Failed to create an account');
     }
