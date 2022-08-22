@@ -46,44 +46,52 @@ const SignUp = () => {
   };
 
   return (
-    <div className="sign-up">
-      <h2>Sign Up</h2>
-      {error && <div className="error">{error}</div>}
-      <form onSubmit={handleSubmit} className="sign-up-form">
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            required
-            ref={emailRef}
-            defaultValue={currentUser.email}
-          ></input>
-        </div>
+    <div className="sign-container">
+      <div className="sign-up">
+        <h2>Update Account</h2>
+        {error && <div className="error">{error}</div>}
+        <form onSubmit={handleSubmit} className="sign-up-form">
+          <div className="form-div">
+            <label>
+              Email
+              <input
+                type="email"
+                required
+                ref={emailRef}
+                defaultValue={currentUser.email}
+              ></input>
+            </label>
+          </div>
 
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            ref={passwordRef}
-            placeholder="Leave blank to keep the same"
-          ></input>
-        </div>
+          <div className="form-div">
+            <label>
+              Password
+              <input
+                type="password"
+                ref={passwordRef}
+                placeholder="Leave blank to keep the same"
+              ></input>
+            </label>
+          </div>
 
-        <div>
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            ref={passwordConfRef}
-            placeholder="Leave blank to keep the same"
-          ></input>
-        </div>
+          <div className="form-div">
+            <label>
+              Confirm Password
+              <input
+                type="password"
+                ref={passwordConfRef}
+                placeholder="Leave blank to keep the same"
+              ></input>
+            </label>
+          </div>
 
-        <button disabled={loading} type="submit">
-          Update Account
-        </button>
-      </form>
-      <div>
-        <Link to="/">Cancel</Link>
+          <button disabled={loading} type="submit">
+            Update Account
+          </button>
+        </form>
+        <div>
+          <Link to="/">Cancel</Link>
+        </div>
       </div>
     </div>
   );
