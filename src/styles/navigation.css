@@ -29,3 +29,15 @@ nav > div > h2 {
     color: grey;
     cursor: pointer;
 }
+
+.profile-pic {
+    width: 60px;
+    border: 4px white solid;
+    border-radius: 60px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
