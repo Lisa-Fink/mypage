@@ -41,7 +41,19 @@ const AuthProvider = ({ children }) => {
   };
 
   const createUser = async (user) => {
+    const date = new Date();
+    const [month, day, year] = [
+      date.getMonth(),
+      date.getDate(),
+      date.getFullYear(),
+    ];
     await setDoc(doc(db, 'users', user.uid), {
+      wall: [
+        {
+          date: `${month + 1}-${day}-${year}`,
+          activity: 'MyPage account created',
+        },
+      ],
       first: nameRef.current[0],
       last: nameRef.current[1],
       profilePic:
