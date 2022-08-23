@@ -6,6 +6,7 @@ import Dashboard from './Dashboard';
 import Login from './LogIn';
 import ForgotPassword from './ForgotPassword';
 import UpdateAccount from './UpdateAccount';
+import Profile from './Profile';
 
 // Routes used to be Switch
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -35,6 +36,16 @@ function App() {
                 </PrivateRoute>
               }
             />
+
+            <Route
+              path="/profile/:id"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

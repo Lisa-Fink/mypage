@@ -45,9 +45,9 @@ const Navigation = () => {
     </div>
   );
 
-  const userDiv = (
+  const userDiv = currentUser && (
     <>
-      <div>Profile</div>
+      <Link to={`/profile/${currentUser.uid}`}>Profile</Link>
       <div>Friends</div>
       <div> Friend Requests</div>
       <div
