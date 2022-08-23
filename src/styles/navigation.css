@@ -25,13 +25,19 @@ nav > div > h2 {
     margin: 15px 10px 15px 10px;
 }
 
-#user-div > div:hover, #user-menu >div>a:hover, #user-menu >div>button:hover{
+#user-div > a {
+    text-decoration: none;
+    color: rgb(231, 231, 231)
+}
+
+#user-div > div:hover, #user-div > a:hover, #user-menu >div>a:hover, #user-menu >div>button:hover{
     color: grey;
     cursor: pointer;
 }
 
 .profile-pic {
     width: 60px;
+    height: 60px;
     border: 4px white solid;
     border-radius: 60px;
 }
