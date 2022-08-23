@@ -1,0 +1,63 @@
+.profile-container {
+    display: flex;
+    padding: 40px 80px;
+    gap:40px;
+}
+
+#pic-img {
+    width:400px;
+    border-radius: 5px;
+}
+
+#pic-div {
+    border: 1px grey solid;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+}
+
+#name {
+    font-size: 60px;
+    font-weight: bold;
+    text-align: left;
+}
+
+#friend-div {
+    width: 400px;
+    border: 1px grey solid;
+    border-radius: 15px; 
+}
+
+.profile-middle {
+    flex-grow: 1;
+}
+
+#actions {
+    display: flex;
+    flex-direction: column;
+    justify-self:right;
+}
+
+.wall {
+    border: 1px grey solid;
+    border-radius: 15px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.wall-activity {
+    background-color: rgb(152, 152, 152);
+    padding: 8px 40px;
+    border-radius: 15px;
+    text-align: left;
+}
+
+#wall-name {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+#friend-div {
+    display: flex;
+    flex-direction: column;
+}
