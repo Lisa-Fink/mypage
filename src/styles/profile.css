@@ -1,6 +1,8 @@
 .profile-container {
     display: flex;
     padding: 40px 80px;
+    /* possibly no wrap */
+    /* flex-wrap: wrap; */
     gap:40px;
 }
 
@@ -19,8 +21,8 @@
 #name {
     font-size: 60px;
     font-weight: bold;
-    text-align: left;
 }
+
 
 #friend-div {
     width: 400px;
@@ -41,6 +43,7 @@
 .wall {
     border: 1px grey solid;
     border-radius: 15px;
+    margin-top: 60px;
     padding: 20px;
     flex-grow: 1;
 }
@@ -60,4 +63,72 @@
 #friend-div {
     display: flex;
     flex-direction: column;
+}
+
+#user-info {
+    text-align: left;
+}
+
+.location-div, .work-div {
+    font-size: 20px;
+}
+
+.status-div {
+    font-size: 26px;
+    font-style: italic;
+    padding: 40px;
+}
+
+.profile-btn {
+    font-size: 18px;
+    margin:4px;
+    border: none;
+    border-radius: 15px;
+    padding: 8px;
+    background-color: rgb(0, 90, 100);
+    color:rgb(231, 231, 231);
+    font-weight: bold;
+}
+.profile-container a {
+    text-decoration: none;
+    color:rgb(231, 231, 231);
+
+}
+
+.profile-btn:hover {
+    background-color: rgb(0, 50, 56);
+    cursor: pointer;
+}
+
+#profile-h1 {
+    margin: 0;
+}
+
+.edit-btns {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.edit-btns > button {
+    width: 400px;
+    
+}
+
+.edit {
+    font-size: 20px;
+    margin: 30px 0;
+}
+
+.edit input, #status {
+    font-size: 20px;
+    margin: 6px;
+    border: none;
+    padding: 6px;
+    border-radius: 15px;
+}
+
+#status {
+    width:100%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
