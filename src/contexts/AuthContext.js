@@ -47,13 +47,11 @@ const AuthProvider = ({ children }) => {
       date.getDate(),
       date.getFullYear(),
     ];
+    const formattedDate = `${month + 1}-${day}-${year}`;
+    const wall = {};
+    wall[formattedDate] = ['MyPage account created'];
     await setDoc(doc(db, 'users', user.uid), {
-      wall: [
-        {
-          date: `${month + 1}-${day}-${year}`,
-          activity: 'MyPage account created',
-        },
-      ],
+      wall: wall,
       first: nameRef.current[0],
       last: nameRef.current[1],
       profilePic:
