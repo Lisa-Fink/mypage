@@ -7,6 +7,7 @@ import Login from './LogIn';
 import ForgotPassword from './ForgotPassword';
 import UpdateAccount from './UpdateAccount';
 import Profile from './Profile';
+import EditProfile from './EditProfile';
 
 // Routes used to be Switch
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -42,6 +43,15 @@ function App() {
               element={
                 <PrivateRoute>
                   <Profile />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/edit-profile"
+              element={
+                <PrivateRoute>
+                  <EditProfile />
                 </PrivateRoute>
               }
             />
