@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { auth, db } from '../components/firebaseConfig';
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, onSnapshot } from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -11,6 +11,8 @@ const useAuth = () => {
 const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+
+  const [userData, setUserData] = useState({});
 
   const nameRef = useRef([]);
 
@@ -73,8 +75,17 @@ const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
+  useEffect(() => {
+    if (currentUser) {
+      onSnapshot(doc(db, 'users', currentUser.uid), (doc) => {
+        setUserData(doc.data());
+      });
+    }
+  }, [currentUser]);
+
   const value = {
     currentUser,
+    userData,
     login,
     signup,
     logout,
