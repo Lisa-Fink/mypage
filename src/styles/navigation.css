@@ -1,3 +1,5 @@
+/* TODO fr menu same location as user menu. see if #fr can have same dimension as user photo thumbnail */
+
 nav {
     display: flex;
     justify-content: space-around;
@@ -25,12 +27,12 @@ nav > div > h2 {
     margin: 15px 10px 15px 10px;
 }
 
-#user-div > a {
+#user-div > a, .fr-info a {
     text-decoration: none;
     color: rgb(231, 231, 231)
 }
 
-#user-div > div:hover, #user-div > a:hover, #user-menu >div>a:hover, #user-menu >div>button:hover{
+#user-div > div:hover, #user-div > a:hover, #user-menu >div>a:hover, #user-menu >div>button:hover, #fr-menu button:hover{
     color: grey;
     cursor: pointer;
 }
@@ -48,7 +50,7 @@ nav > div > h2 {
     gap: 20px;
 }
 
-#user-menu {
+#user-menu, #fr-menu {
     position:fixed;
     display: flex;
     flex-direction: column;
@@ -66,12 +68,12 @@ nav > div > h2 {
     align-content: flex-end;
 }
 
-#user-menu a {
+#user-menu a, #fr-menu > div >div> a {
     text-decoration: none;
     color:rgb(231, 231, 231);
 }
 
-#user-menu > div>button {
+#user-menu > div>button, #fr-menu button{
     color:rgb(231, 231, 231);
     background: none;
     border: none;
@@ -80,3 +82,39 @@ nav > div > h2 {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
+.fr-div {
+    display: flex;
+    border: rgb(1, 164, 179) 1px solid;
+    padding: 6px;
+}
+
+.photo-thumb {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+}
+
+#fr-menu button {
+    font-size: 14px;
+}
+
+.fr-info {
+    color:rgb(231, 231, 231);
+}
+
+.fr-nav {
+    display: flex;
+    /* align-items: center; */
+}
+
+.fr-nav-text {
+    align-self: center;
+}
+.new-fr-alert {
+    font-size: 12px;
+    background-color: red;
+    padding: 5px;
+    margin: 4px;
+    margin-top: 6px;
+    align-self:flex-start
+}
