@@ -36,17 +36,23 @@ const EditProfile = () => {
       const lastName = docSnap.data().last;
       setFirst(firstName);
       setLast(lastName);
-      const title = docSnap.data().work.title ? docSnap.data().work.title : '';
-      const company = docSnap.data().work.company
-        ? docSnap.data().work.company
-        : '';
+      const title =
+        docSnap.data().work && docSnap.data().work.title
+          ? docSnap.data().work.title
+          : '';
+      const company =
+        docSnap.data().work && docSnap.data().work.company
+          ? docSnap.data().work.company
+          : '';
       setWork({ title: title, company: company });
-      const city = docSnap.data().location.city
-        ? docSnap.data().location.city
-        : '';
-      const state = docSnap.data().location.state
-        ? docSnap.data().location.state
-        : '';
+      const city =
+        docSnap.data().location && docSnap.data().location.city
+          ? docSnap.data().location.city
+          : '';
+      const state =
+        docSnap.data().location && docSnap.data().location.state
+          ? docSnap.data().location.state
+          : '';
       setLocation({ city: city, state: state });
       const statusStr = docSnap.data().status ? docSnap.data().status : '';
       setStatus(statusStr);
