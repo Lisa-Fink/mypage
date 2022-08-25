@@ -1,7 +1,5 @@
 import {
   doc,
-  onSnapshot,
-  getDoc,
   setDoc,
   updateDoc,
   arrayUnion,
@@ -28,12 +26,11 @@ const Navigation = () => {
   const [fRInfo, setFRInfo] = useState([]);
   // amount of unviewed friend requests
   const [fRAlert, setFRAlert] = useState(0);
-  const [fRError, setFRError] = useState('');
 
   const [showMenu, setShowMenu] = useState(false);
   const [showFRMenu, setShowFRMenu] = useState(false);
 
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, userData } = useAuth();
 
   const navigate = useNavigate();
 
@@ -49,6 +46,21 @@ const Navigation = () => {
 
   const acceptFr = async (e) => {
     const id = e.target.getAttribute('data-id');
+    const friendName = e.target.getAttribute('data-name');
+
+    // creates date for wall
+    const date = new Date();
+    const [month, day, year] = [
+      date.getMonth(),
+      date.getDate(),
+      date.getFullYear(),
+    ];
+    const formattedDate = `${month + 1}-${day}-${year}`;
+    const wallAddition = {};
+    wallAddition[formattedDate] = arrayUnion(
+      `${name} and ${friendName} are friends!`
+    );
+
     try {
       error && setError('');
 
@@ -57,6 +69,15 @@ const Navigation = () => {
       updateDoc(docRef, {
         friends: arrayUnion(id),
       });
+
+      // update wall of current user
+      setDoc(
+        docRef,
+        {
+          wall: wallAddition,
+        },
+        { merge: true }
+      );
       // remove the fr from current user
       updateDoc(docRef, {
         requests: arrayRemove({ id: id, new: false }),
@@ -66,6 +87,18 @@ const Navigation = () => {
       updateDoc(friendRef, {
         friends: arrayUnion(currentUser.uid),
       });
+
+      // update wall of friend added
+      wallAddition[formattedDate] = arrayUnion(
+        `${friendName} and ${name} are friends!`
+      );
+      setDoc(
+        friendRef,
+        {
+          wall: wallAddition,
+        },
+        { merge: true }
+      );
     } catch {
       setError('Failed to add friend');
     }
@@ -108,15 +141,21 @@ const Navigation = () => {
   };
 
   useEffect(() => {
-    currentUser &&
-      onSnapshot(doc(db, 'users', currentUser.uid), (doc) => {
-        setPhoto(doc.data().profilePic);
-        const first = doc.data().first;
-        const last = doc.data().last;
-        setName(`${first} ${last}`);
-        setFRequests(doc.data().requests);
-      });
-  }, []);
+    if (currentUser && Object.keys(userData).length) {
+      setPhoto(userData.profilePic);
+      const first = userData.first;
+      const last = userData.last;
+      setName(`${first} ${last}`);
+      userData.requests && setFRequests(userData.requests);
+    }
+
+    //   onSnapshot(doc(db, 'users', currentUser.uid), (doc) => {
+    //     setPhoto(doc.data().profilePic);
+    //     const first = doc.data().first;
+    //     const last = doc.data().last;
+    //     setName(`${first} ${last}`);
+    //     setFRequests(doc.data().requests);
+  }, [userData]);
 
   useEffect(() => {
     if (Object.keys(fRequests).length) {
@@ -169,7 +208,12 @@ const Navigation = () => {
                   <Link to={`/profile/${fr.id}`}>{fr.name}</Link>
                 </div>
                 <div className="fr-actions">
-                  <button className="fr-btn" data-id={fr.id} onClick={acceptFr}>
+                  <button
+                    className="fr-btn"
+                    data-id={fr.id}
+                    data-name={fr.name}
+                    onClick={acceptFr}
+                  >
                     Accept
                   </button>
                   <button className="fr-btn" data-id={fr.id} onClick={rejectFr}>
