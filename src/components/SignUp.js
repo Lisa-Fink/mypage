@@ -20,6 +20,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     // TODO check if password is long enough
     // check if passwords match
     if (passwordRef.current.value !== passwordConfRef.current.value) {
@@ -55,12 +56,22 @@ const SignUp = () => {
           <div className="form-div">
             <label>
               <div>First Name</div>
-              <input type="text" required ref={firstNameRef}></input>
+              <input
+                type="text"
+                maxLength={32}
+                required
+                ref={firstNameRef}
+              ></input>
             </label>
 
             <label>
               <div>Last Name</div>
-              <input type="text" required ref={lastNameRef}></input>
+              <input
+                type="text"
+                maxLength={32}
+                required
+                ref={lastNameRef}
+              ></input>
             </label>
           </div>
           <div className="form-div">
