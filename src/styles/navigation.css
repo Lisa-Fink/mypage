@@ -11,6 +11,30 @@ nav {
 
 #logo {
     width: 300px;
+    display: flex;
+    gap:40px;
+}
+
+#search-form {
+    display: flex;
+    margin-top: 2px;
+    justify-content: center;
+    align-items:center;
+}
+
+#search-input {
+    width: 40px;
+    border: none;
+    border-radius: 15px;
+    padding: 8px;
+    background-color: rgb(155, 185, 188);
+    outline: none;
+    font-size: 12px;
+}
+
+#search-input:focus{
+    font-size: 16px;
+    width: 220px;
 }
 
 #user-div{
@@ -42,12 +66,14 @@ nav > div > h2 {
     height: 60px;
     border: 4px white solid;
     border-radius: 60px;
+    z-index: 2;
 }
 
 #user-info-nav {
     display: flex;
     align-items: center;
     gap: 20px;
+    z-index: 2;
 }
 
 #user-menu, #fr-menu {
@@ -62,10 +88,16 @@ nav > div > h2 {
     border-top: 0px solid
 }
 
+#fr-menu{
+   color: rgb(231, 231, 231);
+   margin-top: 10px;
+   border-top: none;
+}
 #user-info {
     display: flex;
     flex-direction: column;
     align-content: flex-end;
+    z-index: 2;
 }
 
 #user-menu a, #fr-menu > div >div> a {
@@ -84,7 +116,7 @@ nav > div > h2 {
 
 .fr-div {
     display: flex;
-    border: rgb(1, 164, 179) 1px solid;
+    border: rgb(69, 119, 123) 1px solid;
     padding: 6px;
 }
 
@@ -118,3 +150,11 @@ nav > div > h2 {
     margin-top: 6px;
     align-self:flex-start
 }
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+  }

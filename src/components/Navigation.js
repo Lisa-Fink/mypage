@@ -27,6 +27,8 @@ const Navigation = () => {
   // amount of unviewed friend requests
   const [fRAlert, setFRAlert] = useState(0);
 
+  const [search, setSearch] = useState('');
+
   const [showMenu, setShowMenu] = useState(false);
   const [showFRMenu, setShowFRMenu] = useState(false);
 
@@ -140,6 +142,13 @@ const Navigation = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    navigate(`search=${search.replace(' ', '+')}`);
+    setSearch('');
+  };
+
   useEffect(() => {
     if (currentUser && Object.keys(userData).length) {
       setPhoto(userData.profilePic);
@@ -148,13 +157,6 @@ const Navigation = () => {
       setName(`${first} ${last}`);
       userData.requests && setFRequests(userData.requests);
     }
-
-    //   onSnapshot(doc(db, 'users', currentUser.uid), (doc) => {
-    //     setPhoto(doc.data().profilePic);
-    //     const first = doc.data().first;
-    //     const last = doc.data().last;
-    //     setName(`${first} ${last}`);
-    //     setFRequests(doc.data().requests);
   }, [userData]);
 
   useEffect(() => {
@@ -244,7 +246,7 @@ const Navigation = () => {
   const userDiv = currentUser && (
     <>
       <Link to={`/profile/${currentUser.uid}`}>Profile</Link>
-      <div>Friends</div>
+      <Link to={`/friends/${currentUser.uid}`}>Friends</Link>
       <div
         id="fr"
         onMouseOver={viewFRMenu}
@@ -279,6 +281,16 @@ const Navigation = () => {
     <nav>
       <div id="logo">
         <h2>MyPage</h2>
+        <form id="search-form" onSubmit={handleSearch}>
+          <span className="material-symbols-outlined">search</span>
+          <input
+            id="search-input"
+            placeholder="Search"
+            autoComplete="off"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </form>
       </div>
 
       <div id="user-div">{currentUser && userDiv}</div>
