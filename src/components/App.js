@@ -8,6 +8,8 @@ import ForgotPassword from './ForgotPassword';
 import UpdateAccount from './UpdateAccount';
 import Profile from './Profile';
 import EditProfile from './EditProfile';
+import Friends from './Friends';
+import Search from './Search';
 
 // Routes used to be Switch
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -30,15 +32,6 @@ function App() {
               }
             />
             <Route
-              path="/update-account"
-              element={
-                <PrivateRoute>
-                  <UpdateAccount />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
               path="/profile/:id"
               element={
                 <PrivateRoute>
@@ -46,7 +39,23 @@ function App() {
                 </PrivateRoute>
               }
             />
-
+            <Route
+              path="/friends/:id"
+              element={
+                <PrivateRoute>
+                  <Friends />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/search=:searchQuery"
+              element={
+                <PrivateRoute>
+                  <Search />
+                </PrivateRoute>
+              }
+            />
+            2
             <Route
               path="/edit-profile"
               element={
@@ -55,7 +64,14 @@ function App() {
                 </PrivateRoute>
               }
             />
-
+            <Route
+              path="/update-account"
+              element={
+                <PrivateRoute>
+                  <UpdateAccount />
+                </PrivateRoute>
+              }
+            />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
