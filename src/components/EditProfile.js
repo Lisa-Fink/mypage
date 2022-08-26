@@ -193,81 +193,101 @@ const EditProfile = () => {
           {error && error}
           <form id="user-info" onSubmit={handleSubmit}>
             <div className="edit">
-              <label>
-                First Name*:{' '}
-                <input
-                  required
-                  value={first}
-                  onChange={(e) => setFirst(e.target.value)}
-                />
-              </label>
-              <label>
-                Last Name*:{' '}
-                <input
-                  required
-                  value={last}
-                  onChange={(e) => setLast(e.target.value)}
-                />
-              </label>
+              <div>
+                <label>
+                  First Name*:{' '}
+                  <input
+                    required
+                    value={first}
+                    onChange={(e) => setFirst(e.target.value)}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Last Name*:{' '}
+                  <input
+                    required
+                    value={last}
+                    onChange={(e) => setLast(e.target.value)}
+                  />
+                </label>
+              </div>
             </div>
 
             <div className="edit">
-              <label>
-                City:{' '}
-                <input
-                  value={location.city}
-                  onChange={(e) =>
-                    setLocation({ state: location.state, city: e.target.value })
-                  }
-                />
-              </label>
-              <label>
-                {/* TODO change input to drop-down menu */}
-                State:
-                <input
-                  maxLength={2}
-                  value={location.state}
-                  onChange={(e) =>
-                    setLocation({ city: location.city, state: e.target.value })
-                  }
-                />
-              </label>
+              <div>
+                <label>
+                  City:{' '}
+                  <input
+                    value={location.city}
+                    onChange={(e) =>
+                      setLocation({
+                        state: location.state,
+                        city: e.target.value,
+                      })
+                    }
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  {/* TODO change input to drop-down menu */}
+                  State:
+                  <input
+                    maxLength={2}
+                    value={location.state}
+                    onChange={(e) =>
+                      setLocation({
+                        city: location.city,
+                        state: e.target.value,
+                      })
+                    }
+                  />
+                </label>
+              </div>
             </div>
 
             <div className="edit">
-              <label>
-                Job Title:
-                <input
-                  value={work.title}
-                  onChange={(e) =>
-                    setWork({ company: work.company, title: e.target.value })
-                  }
-                />
-              </label>{' '}
-              <label>
-                at{' '}
-                <input
-                  value={work.company}
-                  onChange={(e) =>
-                    setWork({ title: work.title, company: e.target.value })
-                  }
-                />
-              </label>
+              <div>
+                <label>
+                  Job Title:
+                  <input
+                    value={work.title}
+                    onChange={(e) =>
+                      setWork({ company: work.company, title: e.target.value })
+                    }
+                  />
+                </label>
+              </div>{' '}
+              <div>
+                <label>
+                  at{' '}
+                  <input
+                    value={work.company}
+                    onChange={(e) =>
+                      setWork({ title: work.title, company: e.target.value })
+                    }
+                  />
+                </label>
+              </div>
             </div>
 
             <div className="edit">
-              <label>
-                Status (140 characters max):{' '}
-                <textarea
-                  id="status"
-                  required
-                  maxLength={140}
-                  value={status}
-                  onChange={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                />
-              </label>
+              <div>
+                <label>
+                  Status (140 characters max):{' '}
+                  <textarea
+                    id="status"
+                    required
+                    maxLength={140}
+                    value={status}
+                    onChange={(e) => {
+                      setStatus(e.target.value);
+                    }}
+                  />
+                </label>
+              </div>
             </div>
             <div className="edit-btns">
               <button

@@ -120,6 +120,8 @@
 .edit {
     font-size: 20px;
     margin: 30px 0;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .edit input, #status {
