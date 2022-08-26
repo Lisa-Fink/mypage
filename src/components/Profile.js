@@ -56,6 +56,12 @@ const Profile = () => {
             docSnap.data().wall && setWall(docSnap.data().wall);
             const friendList = docSnap.data().friends;
             friendList && setFriends(friendList);
+
+            if (Object.keys(userData).length) {
+              const compare = compareFriends(friendList, id, userData.friends);
+              compare.both.length && setMutualFriends(compare.both.length);
+              compare.areFriends && setFriendsWith(true);
+            }
           } else {
             setError('Error retrieving profile');
           }
@@ -64,14 +70,6 @@ const Profile = () => {
       docFunc();
     }
   }, [id]);
-
-  useEffect(() => {
-    if (Object.keys(userData).length && friends.length) {
-      const compare = compareFriends(friends, id, userData.friends);
-      compare.both.length && setMutualFriends(compare.both.length);
-      compare.areFriends && setFriendsWith(true);
-    }
-  }, [userData]);
 
   const compareFriends = (profileFL, profileid, userFL) => {
     let userFLdict = {};
@@ -262,7 +260,9 @@ const Profile = () => {
                 {mutualFriends.length === 1 ? 'Friend' : 'Friends'} in Common
               </div>
             )}
-            <button className="profile-btn">View Friends</button>
+            <Link to={`/friends/${id}`}>
+              <button className="profile-btn">View Friends</button>
+            </Link>
             {actionDiv}
           </div>
         </div>
