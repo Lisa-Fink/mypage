@@ -30,6 +30,7 @@ nav {
     background-color: rgb(155, 185, 188);
     outline: none;
     font-size: 12px;
+    z-index: 2;
 }
 
 #search-input:focus{
