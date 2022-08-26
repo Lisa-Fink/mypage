@@ -88,9 +88,11 @@ const EditProfile = () => {
     // adding any changes to newInfo
     if (first !== original.current.first) {
       newInfo.first = first;
+      newInfo.first_lower = first.toLowerCase();
     }
     if (last !== original.current.last) {
       newInfo.last = last;
+      newInfo.last_lower = last.toLowerCase();
     }
     if (work.title !== original.current.work.title) {
       newInfo.work.title = work.title;
