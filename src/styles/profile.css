@@ -25,9 +25,15 @@
 
 
 #friend-div {
+    display: flex;
+    flex-direction: column;
     width: 400px;
     border: 1px grey solid;
-    border-radius: 15px; 
+    border-radius: 15px;
+}
+
+#friend-div button {
+    width: 390px;
 }
 
 .profile-middle {
@@ -37,7 +43,6 @@
 #actions {
     display: flex;
     flex-direction: column;
-    justify-self:right;
 }
 
 .wall {
@@ -49,9 +54,9 @@
 }
 
 .wall-activity {
-    background-color: rgb(152, 152, 152);
+    background-color: rgb(203, 203, 203);
     padding: 8px 40px;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     text-align: left;
 }
 
@@ -60,10 +65,7 @@
     margin-bottom: 15px;
 }
 
-#friend-div {
-    display: flex;
-    flex-direction: column;
-}
+
 
 #user-info {
     text-align: left;
