@@ -33,6 +33,8 @@ const Profile = () => {
   const [wallPost, setWallPost] = useState('');
   const [statusChange, setStatusChange] = useState('');
 
+  const [fRSent, setFRSent] = useState(false);
+
   const setCompare = useRef(false);
   const processingWallPost = useRef(false);
   const processingPoke = useRef(false);
@@ -68,7 +70,12 @@ const Profile = () => {
 
             if (Object.keys(userData).length) {
               setCompare.current = true;
-              const compare = compareFriends(friendList, id, userData.friends);
+
+              const compare = compareFriends(
+                friendList,
+                id,
+                userData.friends ? userData.friends : []
+              );
               compare.both.length && setMutualFriends(compare.both.length);
               compare.areFriends && setFriendsWith(true);
             }
@@ -81,7 +88,11 @@ const Profile = () => {
     }
     if (!setCompare.current && Object.keys(userData).length) {
       setCompare.current = true;
-      const compare = compareFriends(friends, id, userData.friends);
+      const compare = compareFriends(
+        friends,
+        id,
+        userData.friends ? userData.friends : []
+      );
       compare.both.length && setMutualFriends(compare.both.length);
       compare.areFriends && setFriendsWith(true);
     }
@@ -139,6 +150,7 @@ const Profile = () => {
 
   const addFriend = () => {
     try {
+      setError('');
       const formattedDate = getDate();
       const wallAddition = {};
       wallAddition[formattedDate] = arrayUnion({
@@ -151,11 +163,14 @@ const Profile = () => {
       const docRef = doc(db, 'users', currentUser.uid);
       const friendRef = doc(db, 'users', id);
       // if already have a fr, accept fr, add as friends to user and profile
-      const userFRIDs = userData.requests.map((obj) => {
-        return obj.id;
-      });
-      const hasFR = userFRIDs.includes(id);
-      if (hasFR) {
+      let hasFR = false;
+      if (userData.requests && userData.requests.length) {
+        const userFRIDs = userData.requests.map((obj) => {
+          return obj.id;
+        });
+        hasFR = userFRIDs.includes(id);
+      }
+      if (hasFR !== false) {
         // add friend to current user
         updateDoc(docRef, {
           friends: arrayUnion(id),
@@ -198,8 +213,10 @@ const Profile = () => {
         updateFriends();
         setFriendsWith(true);
       }
+
       // else add current user id as a new fr
       else {
+        setFRSent(true);
         updateDoc(friendRef, {
           requests: arrayUnion({ id: currentUser.uid, new: true }),
         });
@@ -221,15 +238,15 @@ const Profile = () => {
     }
   };
 
-  const getNameFromId = async (userID) => {
-    try {
-      const docRef = doc(db, 'users', userID);
-      const docSnap = await getDoc(docRef);
-      return `${docSnap.data().first} ${docSnap.data().last}`;
-    } catch {
-      return 'user';
-    }
-  };
+  // const getNameFromId = async (userID) => {
+  //   try {
+  //     const docRef = doc(db, 'users', userID);
+  //     const docSnap = await getDoc(docRef);
+  //     return `${docSnap.data().first} ${docSnap.data().last}`;
+  //   } catch {
+  //     return 'user';
+  //   }
+  // };
 
   const processPoke = () => {
     processingPoke.current = true;
@@ -325,13 +342,15 @@ const Profile = () => {
             <button onClick={removeFriend} className="profile-btn">
               Remove as friend
             </button>
+          ) : fRSent ? (
+            'Friend Request Sent'
           ) : (
             <button onClick={addFriend} className="profile-btn">
               Add as friend
             </button>
           )}
           {poked ? (
-            <div>Poke received!</div>
+            <div>Poke sent!</div>
           ) : (
             <button
               disabled={processingPoke.current}
@@ -402,6 +421,17 @@ const Profile = () => {
             )}
           </div>
           <div className="post">{activity.string}</div>
+        </div>
+      );
+    } else if (activity.type === 'profile-pic') {
+      return (
+        <div className="wall-profile-pic">
+          <div>{activity.string}</div>
+          <img
+            src={activity.photo}
+            alt="profile thumbnail"
+            className="wall-profile-img"
+          />
         </div>
       );
     }
