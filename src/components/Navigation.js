@@ -241,6 +241,9 @@ const Navigation = () => {
   const userMenu = (
     <div id="user-menu">
       <div>
+        <Link to="/edit-profile">Edit Profile</Link>
+      </div>
+      <div>
         <Link to="/update-account">Update Account</Link>
       </div>
       <div>
@@ -288,14 +291,19 @@ const Navigation = () => {
       <div id="logo">
         <h2 onClick={() => navigate('/')}>MyPage</h2>
         <form id="search-form" onSubmit={handleSearch}>
-          <span className="material-symbols-outlined">search</span>
-          <input
-            id="search-input"
-            placeholder="Search"
-            autoComplete="off"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          {currentUser && (
+            <>
+              <span className="material-symbols-outlined">search</span>
+
+              <input
+                id="search-input"
+                placeholder="Search"
+                autoComplete="off"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </>
+          )}
         </form>
       </div>
 
