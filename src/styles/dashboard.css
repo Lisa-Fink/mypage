@@ -1,0 +1,89 @@
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.left-dashboard, .right-dashboard {
+    width:15vw
+}
+
+.activity-container {
+    border: 1px grey solid;
+    border-radius: 8px;
+    flex-grow: 2;
+    width: 40vw;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.activity-container a, .poke-text a {
+    text-decoration: none;
+    color: rgb(52, 52, 52);
+    font-weight: bold;
+}
+
+.activity-container a:hover, .poke-text a:hover {
+    text-decoration: underline;
+}
+
+.activity-date {
+    color: rgb(52, 52, 52);
+    font-weight: bold;
+    padding: 6px;
+}
+
+.activity{
+    margin-top: 24px;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.activity-wall-post {
+    margin: 15px 50px;
+    background-color: rgb(211, 211, 211);
+    padding: 10px;
+    font-style: italic;
+    border-radius: 5px;
+}
+
+.poke-btn {
+    margin:4px;
+    border: none;
+    border-radius: 15px;
+    padding: 8px;
+    background-color: rgb(0, 90, 100);
+    color:rgb(231, 231, 231);
+    font-weight: bold;
+}
+
+.poke-btn:hover{
+    background-color: rgb(0, 50, 56);
+    cursor: pointer;
+}
+
+.poke-box {
+    background-color:rgb(211, 211, 211);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.empty {
+    font-style: italic;
+}
+
+.left-dashboard h2 {
+    padding: 10px;
+}
+
+.left-dashboard {
+    background-color: rgb(211, 211, 211);;
+    border-radius: 15px;
+}
+
+.left-dashboard > div {
+    margin: 20px 10px;
+}
