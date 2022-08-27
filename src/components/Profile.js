@@ -80,7 +80,7 @@ const Profile = () => {
       compare.both.length && setMutualFriends(compare.both.length);
       compare.areFriends && setFriendsWith(true);
     }
-  }, [id]);
+  }, [id, userData]);
 
   const compareFriends = (profileFL, profileid, userFL) => {
     let userFLdict = {};
