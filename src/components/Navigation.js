@@ -286,7 +286,7 @@ const Navigation = () => {
   return (
     <nav>
       <div id="logo">
-        <h2>MyPage</h2>
+        <h2 onClick={() => navigate('/')}>MyPage</h2>
         <form id="search-form" onSubmit={handleSearch}>
           <span className="material-symbols-outlined">search</span>
           <input
