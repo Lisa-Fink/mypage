@@ -87,3 +87,16 @@
 .left-dashboard > div {
     margin: 20px 10px;
 }
+
+.dashboard-photo-thumbnail {
+    width: 60px;
+    height: 60px;
+    border: 4px white solid;
+    border-radius: 60px;
+    margin-left: 20px;
+}
+
+.dashboard-profile-pic-div {
+    display: flex;
+    align-items: center;
+}

@@ -32,36 +32,42 @@ const Dashboard = () => {
         setActivityLoad('');
         // get friends ids
         const friendsIDs = userData.friends;
-
         // get each friend's wall
-        const tempActivity = {};
-        const tempNameLookup = {};
-        for (const friendID of friendsIDs) {
-          const friendRef = doc(db, 'users', friendID);
-          const friendSnap = await getDoc(friendRef);
-          const friendWall = friendSnap.data().wall;
-          const name = `${friendSnap.data().first} ${friendSnap.data().last}`;
-          tempNameLookup[friendID] = name;
+        if (friendsIDs) {
+          const tempActivity = {};
+          const tempNameLookup = {};
+          for (const friendID of friendsIDs) {
+            const friendRef = doc(db, 'users', friendID);
+            const friendSnap = await getDoc(friendRef);
+            const friendWall = friendSnap.data().wall;
+            const name = `${friendSnap.data().first} ${friendSnap.data().last}`;
+            tempNameLookup[friendID] = name;
 
-          for (let date in friendWall) {
-            for (let index in friendWall[date]) {
-              if (typeof friendWall[date][index] === 'string') {
-                friendWall[date][index] = {
-                  type: 'string',
-                  string: friendWall[date][index],
-                };
+            for (let date in friendWall) {
+              for (let index in friendWall[date]) {
+                if (typeof friendWall[date][index] === 'string') {
+                  friendWall[date][index] = {
+                    type: 'string',
+                    string: friendWall[date][index],
+                  };
+                }
+                friendWall[date][index].userID = friendID;
               }
-              friendWall[date][index].userID = friendID;
-            }
-            if (tempActivity.hasOwnProperty(date)) {
-              tempActivity[date] = [...tempActivity[date], ...friendWall[date]];
-            } else {
-              tempActivity[date] = friendWall[date];
+              if (tempActivity.hasOwnProperty(date)) {
+                tempActivity[date] = [
+                  ...tempActivity[date],
+                  ...friendWall[date],
+                ];
+              } else {
+                tempActivity[date] = friendWall[date];
+              }
             }
           }
+          setActivityFeed(tempActivity);
+          setNameLookup(tempNameLookup);
+        } else {
+          setActivityFeed(false);
         }
-        setActivityFeed(tempActivity);
-        setNameLookup(tempNameLookup);
       } catch {
         setError('Failed to retrieve data');
       }
@@ -100,7 +106,7 @@ const Dashboard = () => {
     handleDismiss(poke);
   };
 
-  // wall obj type: friend, post, string
+  // wall obj type: friend, post, string, profile-pic
   // friend: user1 is a name -userID, user2 is a name-friendID
   // post: name, string, user:the one who posted, userID
   // string: string, userID. output: userID activity: string
@@ -115,45 +121,61 @@ const Dashboard = () => {
   };
   dates.sort((a, b) => parseDate(b) - parseDate(a));
 
-  const activity = !activityFeed ? (
-    <div>nothing here</div>
-  ) : (
-    <div className="activity-inner-container">
-      {dates.map((date, index) => (
-        <div key={index}>
-          <div className="activity-date">{date}</div>
-          {activityFeed[date].map((obj, index2) => (
-            <div className="activity" key={index - index2}>
-              {obj.type === 'friend' ? (
-                <div>
-                  <Link to={`/profile/${obj.userID}`}>{obj.user1}</Link> is now
-                  friends with{' '}
-                  <Link to={`/profile/${obj.friendID}`}>{obj.user2}</Link>!!
-                </div>
-              ) : obj.type === 'post' ? (
-                <div>
-                  <Link to={`/profile/${obj.user}`}>{obj.name}</Link> posted on{' '}
-                  <Link to={`/profile/${obj.userID}`}>
-                    {nameLookUp[obj.userID]}'
-                    {nameLookUp[obj.userID].slice(-1) !== 's' && 's'}
-                  </Link>{' '}
-                  wall:
-                  <div className="activity-wall-post">{obj.string}</div>
-                </div>
-              ) : (
-                <div>
-                  <Link to={`/profile/${obj.userID}`}>
-                    {nameLookUp[obj.userID]}
-                  </Link>{' '}
-                  activity: {obj.string}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      ))}{' '}
-    </div>
-  );
+  const activity =
+    !activityFeed | !Object.keys(activityFeed).length ? (
+      <div>nothing here...</div>
+    ) : (
+      <div className="activity-inner-container">
+        {dates.map((date, index) => (
+          <div key={index}>
+            <div className="activity-date">{date}</div>
+            {activityFeed[date].map((obj, index2) => (
+              <div className="activity" key={index - index2}>
+                {obj.type === 'friend' ? (
+                  <div>
+                    <Link to={`/profile/${obj.userID}`}>{obj.user1}</Link> is
+                    now friends with{' '}
+                    <Link to={`/profile/${obj.friendID}`}>{obj.user2}</Link>!!
+                  </div>
+                ) : obj.type === 'post' ? (
+                  <div>
+                    <Link to={`/profile/${obj.user}`}>{obj.name}</Link> posted
+                    on{' '}
+                    <Link to={`/profile/${obj.userID}`}>
+                      {nameLookUp[obj.userID]}'
+                      {nameLookUp[obj.userID].slice(-1) !== 's' && 's'}
+                    </Link>{' '}
+                    wall:
+                    <div className="activity-wall-post">{obj.string}</div>
+                  </div>
+                ) : obj.type === 'profile-pic' ? (
+                  <div className="dashboard-profile-pic-div">
+                    <div>
+                      <Link to={`/profile/${obj.userID}`}>
+                        {nameLookUp[obj.userID]}
+                      </Link>{' '}
+                      {obj.string}
+                    </div>
+                    <img
+                      src={obj.photo}
+                      className="dashboard-photo-thumbnail"
+                      alt="profile thumbnail"
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <Link to={`/profile/${obj.userID}`}>
+                      {nameLookUp[obj.userID]}
+                    </Link>{' '}
+                    activity: {obj.string}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ))}{' '}
+      </div>
+    );
 
   const pokeInfo = !pokes.length ? (
     <div className="poke-box poke-text empty">No Pokes</div>
