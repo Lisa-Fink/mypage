@@ -277,6 +277,17 @@ const Profile = () => {
     processingWallPost.current = false;
   };
 
+  const updateStatusDiv = (
+    <div className="update-status-div">
+      <textarea
+        className="status-input"
+        placeholder="Update your status (140 characters max)"
+        maxLength={140}
+      ></textarea>
+      <button className="profile-btn">Update</button>
+    </div>
+  );
+
   const actionDiv = (
     <div id="actions">
       {currentUser.uid !== id ? (
@@ -429,6 +440,7 @@ const Profile = () => {
               </div>
             )}
             {status && <div className="status-div">{status}</div>}
+            {id === currentUser.uid && updateStatusDiv}
             <div className="wall">
               {wallPostDiv}
               <div id="wall-name">

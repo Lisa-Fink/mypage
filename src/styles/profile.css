@@ -137,7 +137,7 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-#wall-input {
+#wall-input, .status-input {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     width: 80%;
     font-size: 18px;
@@ -148,7 +148,7 @@
     height: min-content;
 }
 
-.wall-post {
+.wall-post, .update-status-div{
     display: flex;
     align-items: flex-start;
     gap: 8px;
@@ -165,4 +165,10 @@
 
 .post {
     margin-left: 20px;
+}
+
+.update-status-div {
+    border: 1px grey solid;
+    padding: 8px;
+    border-radius: 15px;
 }
