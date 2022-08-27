@@ -27,6 +27,8 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    setCurrentUser(null);
+    setUserData({});
     return auth.signOut();
   };
 
@@ -58,6 +60,8 @@ const AuthProvider = ({ children }) => {
       last: nameRef.current[1],
       first_lower: nameRef.current[0].toLowerCase(),
       last_lower: nameRef.current[1].toLowerCase(),
+      friends: [],
+      requests: [],
       profilePic:
         'https://firebasestorage.googleapis.com/v0/b/mypage-15a7a.appspot.com/o/m.png?alt=media&token=beb81183-12ad-44b7-938a-1fceee1da5fc',
     });
