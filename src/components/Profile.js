@@ -31,10 +31,12 @@ const Profile = () => {
   const [poked, setPoked] = useState(false);
 
   const [wallPost, setWallPost] = useState('');
+  const [statusChange, setStatusChange] = useState('');
 
   const setCompare = useRef(false);
   const processingWallPost = useRef(false);
   const processingPoke = useRef(false);
+  const processingStatusUpdate = useRef(false);
 
   const { currentUser, userData } = useAuth();
 
@@ -247,6 +249,27 @@ const Profile = () => {
     }
   };
 
+  const processStatusUpdate = async (e) => {
+    e.preventDefault();
+    // update database
+    const newStatus = statusChange;
+    const docRef = doc(db, 'users', currentUser.uid);
+    try {
+      // update status
+      await setDoc(docRef, { status: newStatus }, { merge: true });
+      // update wall
+      const formattedDate = getDate();
+      const wallAddition = {};
+      wallAddition[formattedDate] = arrayUnion(
+        `Changed status to ${newStatus}`
+      );
+      setDoc(docRef, { wall: wallAddition }, { merge: true });
+      setStatusChange('');
+    } catch {
+      setError('Failed to update status');
+    }
+  };
+
   const handleWallPost = (e) => {
     e.preventDefault();
     processingWallPost.current = true;
@@ -278,14 +301,20 @@ const Profile = () => {
   };
 
   const updateStatusDiv = (
-    <div className="update-status-div">
+    <form className="update-status-div" onSubmit={processStatusUpdate}>
       <textarea
         className="status-input"
         placeholder="Update your status (140 characters max)"
         maxLength={140}
+        value={statusChange}
+        onChange={(e) => {
+          setStatusChange(e.target.value);
+        }}
       ></textarea>
-      <button className="profile-btn">Update</button>
-    </div>
+      <button disabled={processingStatusUpdate.current} className="profile-btn">
+        Update
+      </button>
+    </form>
   );
 
   const actionDiv = (
