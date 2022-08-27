@@ -30,7 +30,7 @@ const Friends = () => {
         setIDName(nameStr);
 
         // get and store the name and pic for each friend
-        const friendIDs = docSnap.data().friends;
+        const friendIDs = docSnap.data().friends ? docSnap.data().friends : [];
 
         const getInfo = async () => {
           const fIDinfo = [];
@@ -53,24 +53,26 @@ const Friends = () => {
     <div>
       <h1>Friends of {idName}</h1>
       <div className="friend-div">
-        {flData.map((fObj) => {
-          return (
-            <div
-              onClick={() => {
-                navigate(`/profile/${fObj.id}`);
-              }}
-              className="friend-card"
-              key={fObj.id}
-            >
-              <img
-                className="friends-thumbnail"
-                src={fObj.photo}
-                alt="thumbnail"
-              />
-              {fObj.name}
-            </div>
-          );
-        })}
+        {flData && flData.length
+          ? flData.map((fObj) => {
+              return (
+                <div
+                  onClick={() => {
+                    navigate(`/profile/${fObj.id}`);
+                  }}
+                  className="friend-card"
+                  key={fObj.id}
+                >
+                  <img
+                    className="friends-thumbnail"
+                    src={fObj.photo}
+                    alt="thumbnail"
+                  />
+                  {fObj.name}
+                </div>
+              );
+            })
+          : 'Nothing here...'}
       </div>
     </div>
   );
