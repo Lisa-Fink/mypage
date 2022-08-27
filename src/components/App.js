@@ -10,6 +10,7 @@ import Profile from './Profile';
 import EditProfile from './EditProfile';
 import Friends from './Friends';
 import Search from './Search';
+import Footer from './Footer';
 
 // Routes used to be Switch
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -78,6 +79,7 @@ function App() {
           </Routes>
         </AuthProvider>
       </Router>
+      <Footer />
     </div>
   );
 }
