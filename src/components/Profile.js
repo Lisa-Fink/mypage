@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   doc,
   getDoc,
@@ -29,6 +29,10 @@ const Profile = () => {
   const [mutualFriends, setMutualFriends] = useState(0);
   const [friendsWith, setFriendsWith] = useState(false);
 
+  const [wallPost, setWallPost] = useState('');
+
+  const setCompare = useRef(false);
+
   const { currentUser, userData } = useAuth();
 
   useEffect(() => {
@@ -58,6 +62,7 @@ const Profile = () => {
             friendList && setFriends(friendList);
 
             if (Object.keys(userData).length) {
+              setCompare.current = true;
               const compare = compareFriends(friendList, id, userData.friends);
               compare.both.length && setMutualFriends(compare.both.length);
               compare.areFriends && setFriendsWith(true);
@@ -68,6 +73,12 @@ const Profile = () => {
         });
       };
       docFunc();
+    }
+    if (!setCompare.current && Object.keys(userData).length) {
+      setCompare.current = true;
+      const compare = compareFriends(friends, id, userData.friends);
+      compare.both.length && setMutualFriends(compare.both.length);
+      compare.areFriends && setFriendsWith(true);
     }
   }, [id]);
 
@@ -109,20 +120,28 @@ const Profile = () => {
     }
   };
 
+  const getDate = () => {
+    // creates date for wall
+    const date = new Date();
+    const [month, day, year] = [
+      date.getMonth(),
+      date.getDate(),
+      date.getFullYear(),
+    ];
+    const formattedDate = `${month + 1}-${day}-${year}`;
+    return formattedDate;
+  };
+
   const addFriend = () => {
     try {
-      // creates date for wall
-      const date = new Date();
-      const [month, day, year] = [
-        date.getMonth(),
-        date.getDate(),
-        date.getFullYear(),
-      ];
-      const formattedDate = `${month + 1}-${day}-${year}`;
+      const formattedDate = getDate();
       const wallAddition = {};
-      wallAddition[formattedDate] = arrayUnion(
-        `${userData.first} ${userData.last} and ${first} ${last} are friends!`
-      );
+      wallAddition[formattedDate] = arrayUnion({
+        type: 'friend',
+        friendId: id,
+        user1: `${userData.first} ${userData.last}`,
+        user2: `${first} ${last}`,
+      });
 
       const docRef = doc(db, 'users', currentUser.uid);
       const friendRef = doc(db, 'users', id);
@@ -157,9 +176,12 @@ const Profile = () => {
           friends: arrayUnion(currentUser.uid),
         });
         // update wall of friend added
-        wallAddition[formattedDate] = arrayUnion(
-          `${first} ${last} and ${userData.first} ${userData.last} are friends!`
-        );
+        wallAddition[formattedDate] = arrayUnion({
+          type: 'friend',
+          friendId: currentUser.uid,
+          user1: `${first} ${last}`,
+          user2: `${userData.first} ${userData.last}`,
+        });
         setDoc(
           friendRef,
           {
@@ -194,6 +216,44 @@ const Profile = () => {
     }
   };
 
+  const getNameFromId = async (userID) => {
+    try {
+      const docRef = doc(db, 'users', userID);
+      const docSnap = await getDoc(docRef);
+      return `${docSnap.data().first} ${docSnap.data().last}`;
+    } catch {
+      return 'user';
+    }
+  };
+
+  const handleWallPost = (e) => {
+    e.preventDefault();
+    const post = wallPost;
+    const formattedDate = getDate();
+    const profileRef = doc(db, 'users', id);
+
+    const wallAddition = {};
+    wallAddition[formattedDate] = arrayUnion({
+      type: 'post',
+      user: currentUser.uid,
+      name: `${userData.first} ${userData.last}`,
+      string: post,
+    });
+    try {
+      setError('');
+      setDoc(
+        profileRef,
+        {
+          wall: wallAddition,
+        },
+        { merge: true }
+      );
+    } catch {
+      setError('error creating wall post');
+    }
+    setWallPost('');
+  };
+
   const actionDiv = (
     <div id="actions">
       {currentUser.uid !== id ? (
@@ -224,6 +284,52 @@ const Profile = () => {
   };
   dates.sort((a, b) => parseDate(b) - parseDate(a));
 
+  const wallPostDiv = (
+    <form className="wall-post" onSubmit={handleWallPost}>
+      <textarea
+        value={wallPost}
+        onChange={(e) => setWallPost(e.target.value)}
+        id="wall-input"
+        placeholder="Say something!"
+        maxLength={140}
+      ></textarea>
+      <button className="profile-btn" id="wall-btn">
+        Share
+      </button>
+    </form>
+  );
+
+  const processWallPost = (activity) => {
+    if (typeof activity === 'string') {
+      return activity;
+    }
+    if (activity.type === 'friend') {
+      const user = activity.user1;
+      const friend = activity.user2;
+      const id = activity.friendId;
+      return (
+        <div className="friends">
+          {user} and <Link to={`/profile/${id}`}>{friend}</Link> are now
+          friends!
+        </div>
+      );
+    } else if (activity.type === 'post') {
+      const userName = activity.name;
+      return (
+        <div>
+          <div className="username-post">
+            {userName === 'error' ? (
+              'unkown user:'
+            ) : (
+              <Link to={`/profile/${activity.user}`}>{userName}:</Link>
+            )}
+          </div>
+          <div className="post">{activity.string}</div>
+        </div>
+      );
+    }
+  };
+
   const wallDiv = !dates.length ? (
     <div className="wall-activity">Nothing here....</div>
   ) : (
@@ -234,11 +340,14 @@ const Profile = () => {
         {wall[date]
           .slice(0)
           .reverse()
-          .map((activity, index2) => (
-            <div key={`${index}-${index2}`} className="wall-activity">
-              {activity}
-            </div>
-          ))}
+          .map((activity, index2) => {
+            const content = processWallPost(activity);
+            return (
+              <div key={`${index}-${index2}`} className="wall-activity">
+                {content}
+              </div>
+            );
+          })}
       </div>
     ))
   );
@@ -284,7 +393,10 @@ const Profile = () => {
             )}
             {status && <div className="status-div">{status}</div>}
             <div className="wall">
-              <div id="wall-name">{first}'s Wall</div>
+              {wallPostDiv}
+              <div id="wall-name">
+                {first}'{first[-1] !== 's' && 's'} Wall
+              </div>
               {wallDiv}
             </div>
           </div>

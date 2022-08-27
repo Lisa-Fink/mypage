@@ -59,9 +59,12 @@ const Navigation = () => {
     ];
     const formattedDate = `${month + 1}-${day}-${year}`;
     const wallAddition = {};
-    wallAddition[formattedDate] = arrayUnion(
-      `${name} and ${friendName} are friends!`
-    );
+    wallAddition[formattedDate] = arrayUnion({
+      type: 'friend',
+      friendId: id,
+      user1: `${name}`,
+      user2: `${friendName}`,
+    });
 
     try {
       error && setError('');
@@ -91,9 +94,12 @@ const Navigation = () => {
       });
 
       // update wall of friend added
-      wallAddition[formattedDate] = arrayUnion(
-        `${friendName} and ${name} are friends!`
-      );
+      wallAddition[formattedDate] = arrayUnion({
+        type: 'friend',
+        friendId: currentUser.uid,
+        user1: `${friendName}`,
+        user2: `${name}`,
+      });
       setDoc(
         friendRef,
         {

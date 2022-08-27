@@ -136,3 +136,33 @@
     width:100%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+#wall-input {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    width: 80%;
+    font-size: 18px;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 5px;
+    height: min-content;
+}
+
+.wall-post {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.username-post, .username-post a, .friends a {
+    color: rgb(52, 52, 52);
+    font-weight: bold;
+}
+
+.username-post a:hover, .friends a:hover {
+    text-decoration: underline;
+}
+
+.post {
+    margin-left: 20px;
+}
