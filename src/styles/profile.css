@@ -8,6 +8,7 @@
 
 #pic-img {
     width:400px;
+    max-height: 600px;
     border-radius: 5px;
 }
 
@@ -171,4 +172,45 @@
     border: 1px grey solid;
     padding: 8px;
     border-radius: 15px;
+}
+
+#edit-photo {
+    border: 1px grey solid;
+    border-radius: 15px;
+    padding: 30px
+}
+
+#edit-photo h4 {
+    margin: 0 0 18px 0
+}
+
+.edit-photo-btn {
+    font-size: 14px;
+}
+
+.photo-input {
+    background-color: rgb(183, 183, 183);
+    padding: 14px;
+    border-radius: 8px;
+}
+
+.profile-left {
+    max-width: 500px;
+}
+
+.change-photo-div {
+    margin-top: 12px;
+}
+
+.wall-profile-img {
+    width: 60px;
+    height: 60px;
+    border: 4px white solid;
+    border-radius: 60px;
+    margin-left: 20px;
+}
+
+.wall-profile-pic {
+    display: flex;
+    align-items: center;
 }
