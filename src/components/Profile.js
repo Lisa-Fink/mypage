@@ -28,10 +28,13 @@ const Profile = () => {
   const [friends, setFriends] = useState([]);
   const [mutualFriends, setMutualFriends] = useState(0);
   const [friendsWith, setFriendsWith] = useState(false);
+  const [poked, setPoked] = useState(false);
 
   const [wallPost, setWallPost] = useState('');
 
   const setCompare = useRef(false);
+  const processingWallPost = useRef(false);
+  const processingPoke = useRef(false);
 
   const { currentUser, userData } = useAuth();
 
@@ -226,8 +229,27 @@ const Profile = () => {
     }
   };
 
+  const processPoke = () => {
+    processingPoke.current = true;
+    // add the poke to the profile's data
+    const profileRef = doc(db, 'users', id);
+    try {
+      updateDoc(profileRef, {
+        pokes: arrayUnion({
+          name: `${userData.first} ${userData.last}`,
+          id: currentUser.uid,
+        }),
+      });
+      processingPoke.current = false;
+      setPoked(true);
+    } catch {
+      setError('error sending poke');
+    }
+  };
+
   const handleWallPost = (e) => {
     e.preventDefault();
+    processingWallPost.current = true;
     const post = wallPost;
     const formattedDate = getDate();
     const profileRef = doc(db, 'users', id);
@@ -248,10 +270,11 @@ const Profile = () => {
         },
         { merge: true }
       );
+      setWallPost('');
     } catch {
       setError('error creating wall post');
     }
-    setWallPost('');
+    processingWallPost.current = false;
   };
 
   const actionDiv = (
@@ -267,7 +290,17 @@ const Profile = () => {
               Add as friend
             </button>
           )}
-          <button className="profile-btn">Poke</button>
+          {poked ? (
+            <div>Poke received!</div>
+          ) : (
+            <button
+              disabled={processingPoke.current}
+              onClick={processPoke}
+              className="profile-btn"
+            >
+              Poke
+            </button>
+          )}
         </>
       ) : (
         <Link to="/edit-profile">
@@ -293,7 +326,11 @@ const Profile = () => {
         placeholder="Say something!"
         maxLength={140}
       ></textarea>
-      <button className="profile-btn" id="wall-btn">
+      <button
+        disabled={processingWallPost.current}
+        className="profile-btn"
+        id="wall-btn"
+      >
         Share
       </button>
     </form>
