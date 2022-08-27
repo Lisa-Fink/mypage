@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, arrayUnion } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+
+import { storage } from './firebaseConfig';
+import { ref, uploadBytes } from 'firebase/storage';
 
 import '../styles/profile.css';
 
@@ -18,6 +21,9 @@ const EditProfile = () => {
   const [status, setStatus] = useState('');
   const [photo, setPhoto] = useState('');
   const [wall, setWall] = useState({});
+
+  const [imageUpload, setImageUpload] = useState(null);
+  const [photoStatus, setPhotoStatus] = useState('');
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -74,6 +80,14 @@ const EditProfile = () => {
     }
   };
 
+  const date = new Date();
+  const [month, day, year] = [
+    date.getMonth(),
+    date.getDate(),
+    date.getFullYear(),
+  ];
+  const formattedDate = `${month + 1}-${day}-${year}`;
+
   useEffect(() => {
     getUserData();
   }, [currentUser.uid]);
@@ -127,13 +141,7 @@ const EditProfile = () => {
     }
 
     // updates wall with changes
-    const date = new Date();
-    const [month, day, year] = [
-      date.getMonth(),
-      date.getDate(),
-      date.getFullYear(),
-    ];
-    const formattedDate = `${month + 1}-${day}-${year}`;
+
     let updatedName = false;
     for (const key of Object.keys(newInfo)) {
       let str = null;
@@ -180,6 +188,57 @@ const EditProfile = () => {
     navigate(`/profile/${currentUser.uid}`);
   };
 
+  const uploadImage = async () => {
+    if (imageUpload === null) {
+      return;
+    }
+
+    setPhotoStatus('Uploading...');
+    const docRef = doc(db, 'users', currentUser.uid);
+    const dateStr = Date.now();
+    const img = `profile-pics/${currentUser.uid}/${dateStr}`;
+    const imageRef = ref(storage, img);
+    let imgStr = null;
+    try {
+      // upload to cloud storage
+      await uploadBytes(imageRef, imageUpload);
+
+      // save string of link to image to image in user's firestore
+      const fullImg =
+        'https://firebasestorage.googleapis.com/v0/b/mypage-15a7a.appspot.com/o/profile-pics%2F' +
+        currentUser.uid +
+        '%2F' +
+        dateStr +
+        '?alt=media&token=1914e966-c1ee-4b7b-96f0-4f34da2b4bc8';
+      // stores the image address to access after try / catch completes
+      imgStr = fullImg;
+
+      await setDoc(
+        docRef,
+        { profilePic: fullImg },
+        {
+          merge: true,
+        }
+      );
+
+      setPhoto(fullImg);
+
+      setPhotoStatus('Successfully changed profile picture');
+    } catch {
+      setPhotoStatus('Failed to upload photo');
+    }
+
+    // create a wall post with new photo
+    const wallAddition = {};
+    wallAddition[formattedDate] = arrayUnion({
+      type: 'profile-pic',
+      photo: imgStr,
+      string: 'Changed profile picture',
+    });
+
+    setDoc(docRef, { wall: wallAddition }, { merge: true });
+  };
+
   return (
     <div>
       <h1 id="profile-h1">Edit Profile</h1>{' '}
@@ -187,6 +246,27 @@ const EditProfile = () => {
         <div className="profile-left">
           <div id="pic-div">
             <img id="pic-img" src={photo} alt="profile" />
+          </div>
+          <div id="edit-photo">
+            <h4>Change Profile Pic</h4>
+            {photoStatus}
+            <div className="change-photo-div">
+              <input
+                className="photo-input"
+                type="file"
+                onChange={(e) => {
+                  setImageUpload(e.target.files[0]);
+                }}
+              />
+            </div>
+            <div>
+              <button
+                className="profile-btn edit-photo-btn"
+                onClick={uploadImage}
+              >
+                Change Profile Pic
+              </button>
+            </div>
           </div>
         </div>
         <div className="profile-middle">
