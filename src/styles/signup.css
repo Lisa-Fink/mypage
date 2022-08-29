@@ -91,5 +91,10 @@
     .sign-up > h2 {
         margin: 2px 0 24px 0;
     }
+    .sign-up-form input {
+        min-width: none;
+        margin-left: 6px;
+        margin-right: 6px;
+    }
 
 }
