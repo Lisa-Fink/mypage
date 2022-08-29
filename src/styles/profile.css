@@ -80,7 +80,8 @@
 
 #user-info {
     text-align: left;
-    justify-content: space-between;
+    flex-grow: 1;
+    align-items: center;
 }
 
 .location-div, .work-div {
@@ -166,6 +167,10 @@
     gap: 8px;
 }
 
+.update-status-div {
+    width: 90%;
+}
+
 .username-post, .username-post a, .friends a {
     color: rgb(52, 52, 52);
     font-weight: bold;
@@ -183,6 +188,7 @@
     border: 1px grey solid;
     padding: 8px;
     border-radius: 15px;
+    flex-grow: 2;
 }
 
 #edit-photo {
