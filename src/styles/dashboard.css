@@ -108,7 +108,15 @@
     display: none;
 }
 
+.activity-option {
+    display: none;
+}
+
 @media only screen and (max-width: 780px)  {
+    .activity-option {
+        display: block;
+    }
+    
     .left-dashboard {
         display: none;
     }
