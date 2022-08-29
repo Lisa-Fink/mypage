@@ -494,7 +494,7 @@ const Profile = () => {
         <div className="profile-middle">
           {error && error}
 
-          <div id="user-info">
+          <div id="profile-user-info">
             <div id="user-first-div">
               <div>
                 <div id="name">
