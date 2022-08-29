@@ -307,7 +307,7 @@ const Navigation = () => {
     </div>
   );
 
-  const hamburgerMenu = (
+  const hamburgerMenu = currentUser && (
     <div id="mobile-menu">
       <div className="hamburger-search">
         <form onSubmit={handleSearch}>
