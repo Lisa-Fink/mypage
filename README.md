@@ -1,6 +1,56 @@
-# Getting Started with Create React App
+# MyPage Social Media App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A fully functioning social media website
+created with React.JS, Firebase, Javascript, and CSS.
+
+# <a href="https://mypage-15a7a.web.app/">Live Preview</a>
+
+## Features:
+
+### User Accounts:
+
+Create an account using firebase authentication
+
+Login page, with sign up, and password reset options. Update account page gives users the option to change their email or password.
+
+### Dashboard:
+
+MyPage news and update menu.
+
+Activity feed that displays all recent activity of friends
+
+Poke menu: Displays pokes received with the option to poke back or dismiss.
+
+### Profile Page:
+
+Displays users name, job, location, and status.
+
+Edit profile: change all information, and upload a profile picture.
+
+Wall: message board for each profile, and displays all recent activity.
+
+Actions: can add or remove a friend or send a poke
+
+### Navigation Bar:
+
+Search: searches for users based on their first or last name.
+
+Friend Requests: displays an alert in real time showing the number of unseen requests. All friend requests are displayed in a drop down menu with the option to accept or reject.
+
+## Screenshots
+
+### Desktop:
+
+<img src="./screenshots/desktop-profile.png" width="400px">
+
+<img src="./screenshots/desktop-dash.png" width="400px"> 
+<img src="./screenshots/desktop-login.png" width="400px">
+
+### Mobile:
+
+<img src="./screenshots/mobile-dash.png" width="200px"> 
+<img src="./screenshots/mobile-profile.png" width="200px">
+<img src="./screenshots/mobile-open-nav.png" width="200px">
 
 ## Available Scripts
 
@@ -14,11 +64,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
@@ -28,43 +73,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
