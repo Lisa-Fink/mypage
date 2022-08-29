@@ -13,8 +13,6 @@
 }
 
 .sign-up {
-    min-width: 240px;
-    max-width: fit-content;
     border: 2px grey solid;
     border-radius: 10px;
     padding: 40px;
@@ -34,8 +32,6 @@
 }
 
 .sign-up-form input {
-    max-width: 400px;
-    min-width: 180px;
     margin-bottom: 20px;
     padding: 8px;
     border-radius: 10px;
@@ -84,7 +80,7 @@
         display: none;
     }
     .sign-up {
-        max-width: 240px;
+        width: 80%;
         padding: 20px;
     }
 
@@ -92,9 +88,10 @@
         margin: 2px 0 24px 0;
     }
     .sign-up-form input {
-        min-width: none;
+        min-width: 0;
+    }
+    .form-div > label {
         margin-left: 6px;
         margin-right: 6px;
     }
-
 }
