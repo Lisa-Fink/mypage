@@ -32,6 +32,9 @@ const Navigation = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showFRMenu, setShowFRMenu] = useState(false);
 
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showMobileFRMenu, setShowMobileFRMenu] = useState(false);
+
   const { currentUser, logout, userData } = useAuth();
 
   const navigate = useNavigate();
@@ -127,8 +130,7 @@ const Navigation = () => {
     }
   };
 
-  const viewFRMenu = async () => {
-    setShowFRMenu(true);
+  const setViewed = async () => {
     // set all friend requests to viewed
     if (fRAlert > 0 && !updatingNew.current) {
       updatingNew.current = true;
@@ -146,6 +148,11 @@ const Navigation = () => {
       }
       updatingNew.current = false;
     }
+  };
+
+  const viewFRMenu = async () => {
+    setShowFRMenu(true);
+    await setViewed();
   };
 
   const handleSearch = (e) => {
@@ -286,28 +293,99 @@ const Navigation = () => {
       {error && <div>error</div>}
     </>
   );
-  return (
-    <nav>
-      <div id="logo">
-        <h2 onClick={() => navigate('/')}>MyPage</h2>
-        <form id="search-form" onSubmit={handleSearch}>
-          {currentUser && (
-            <>
-              <span className="material-symbols-outlined">search</span>
 
-              <input
-                id="search-input"
-                placeholder="Search"
-                autoComplete="off"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </>
-          )}
+  const hamburgerMenuSelect = currentUser && (
+    <div
+      id="mobile-menu-select"
+      onClick={() => setShowMobileMenu(!showMobileMenu)}
+    >
+      {showMobileMenu ? (
+        <span className="material-symbols-outlined hamburger">close</span>
+      ) : (
+        <span className="material-symbols-outlined hamburger">menu</span>
+      )}
+    </div>
+  );
+
+  const hamburgerMenu = (
+    <div id="mobile-menu">
+      <div className="hamburger-search">
+        <form onSubmit={handleSearch}>
+          <span className="material-symbols-outlined">search</span>
+
+          <input
+            className="search-input"
+            placeholder="Search"
+            autoComplete="off"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </form>
       </div>
+      <div>
+        <Link to={`/`}>Dashboard</Link>
+      </div>
+      <div>
+        <Link to={`/profile/${currentUser.uid}`}>Profile</Link>
+      </div>
+      <div>
+        <Link to={`/friends/${currentUser.uid}`}>Friends</Link>
+      </div>
+      <div>
+        <div
+          className="fr-nav-text mobile-expanded-menu"
+          onClick={() => {
+            !showFRMenu && setViewed();
+            setShowMobileFRMenu(!showMobileFRMenu);
+          }}
+        >
+          {!showMobileFRMenu ? (
+            <span className="material-symbols-outlined">chevron_right</span>
+          ) : (
+            <span className="material-symbols-outlined">expand_more</span>
+          )}{' '}
+          Friend Requests
+          {fRAlert > 0 && <div className="new-fr-alert">{fRAlert}</div>}
+        </div>
+        <div id="mobile-fr-menu">{showMobileFRMenu && fReqMenu}</div>
+      </div>
 
-      <div id="user-div">{currentUser && userDiv}</div>
+      <div>
+        <Link to="/update-account">Update Account</Link>
+      </div>
+      <div>
+        <button className="mobile-menu-btn" onClick={handleLogout}>
+          Log Out
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <nav>
+      <div className="nav-div">
+        <div id="logo">
+          <h2 onClick={() => navigate('/')}>MyPage</h2>
+          <form id="search-form" onSubmit={handleSearch}>
+            {currentUser && (
+              <>
+                <span className="material-symbols-outlined">search</span>
+
+                <input
+                  className="search-input"
+                  placeholder="Search"
+                  autoComplete="off"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </>
+            )}
+          </form>
+        </div>
+        {hamburgerMenuSelect}
+        <div id="user-div">{currentUser && userDiv}</div>
+      </div>
+      {showMobileMenu && hamburgerMenu}
     </nav>
   );
 };

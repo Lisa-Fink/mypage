@@ -207,6 +207,43 @@ const Dashboard = () => {
     ))
   );
 
+  const showPokes = () => {
+    const pokes = document.getElementById('poke');
+    const activity = document.getElementById('activity');
+
+    pokes.style.display = 'block';
+    activity.style.display = 'none';
+  };
+
+  const showActivity = () => {
+    const pokes = document.getElementById('poke');
+    const activity = document.getElementById('activity');
+
+    pokes.style.display = 'none';
+    activity.style.display = 'block';
+  };
+
+  const pokeOption = (
+    <div className="poke-option">
+      <h3>
+        You've been poked!{' '}
+        <button onClick={showPokes} className="poke-btn">
+          view pokes
+        </button>
+      </h3>
+    </div>
+  );
+
+  const activityOption = (
+    <div className="activity-option">
+      <h3>
+        <button className="poke-btn activity-btn" onClick={showActivity}>
+          Show Activity Feed
+        </button>
+      </h3>
+    </div>
+  );
+
   return (
     <div>
       <h2>Dashboard</h2>
@@ -217,8 +254,9 @@ const Dashboard = () => {
           <div>Thanks for using MyPage!</div>
           <div>Check back daily to see what your friends are up to!</div>
         </div>
-        <div className="center-dashboard">
+        <div className="center-dashboard" id="activity">
           <div>
+            {pokes.length > 0 && pokeOption}
             <h3>Activity Feed</h3>
 
             <div className="activity-container">
@@ -226,8 +264,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="right-dashboard">
+        <div className="right-dashboard" id="poke">
           <div className="poke-container">
+            {activityOption}
             <h3>Pokes</h3>
             <div>{pokeInfo}</div>
           </div>

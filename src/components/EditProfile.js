@@ -342,7 +342,7 @@ const EditProfile = () => {
               </div>{' '}
               <div>
                 <label>
-                  at{' '}
+                  at:{' '}
                   <input
                     value={work.company}
                     onChange={(e) =>

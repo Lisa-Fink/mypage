@@ -9,13 +9,15 @@ import {
   onSnapshot,
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 import '../styles/profile.css';
 
 const Profile = () => {
   let { id } = useParams();
+
+  const navigate = useNavigate();
 
   const [first, setFirst] = useState('');
   const [last, setLast] = useState('');
@@ -335,7 +337,7 @@ const Profile = () => {
   );
 
   const actionDiv = (
-    <div id="actions">
+    <div className="actions">
       {currentUser.uid !== id ? (
         <>
           {friendsWith ? (
@@ -476,40 +478,56 @@ const Profile = () => {
                 {mutualFriends.length === 1 ? 'Friend' : 'Friends'} in Common
               </div>
             )}
-            <Link to={`/friends/${id}`}>
-              <button className="profile-btn">View Friends</button>
-            </Link>
+            <div className="actions">
+              <button
+                onClick={() => {
+                  navigate(`/friends/${id}`);
+                }}
+                className="profile-btn"
+              >
+                View Friends
+              </button>
+            </div>
             {actionDiv}
           </div>
         </div>
         <div className="profile-middle">
           {error && error}
+
           <div id="user-info">
-            <div id="name">
-              {first} {last}
+            <div id="user-first-div">
+              <div>
+                <div id="name">
+                  {first} {last}
+                </div>
+                {location && (
+                  <div className="location-div">
+                    {location.city}, {location.state}
+                  </div>
+                )}
+                {work && (
+                  <div className="work-div">
+                    {work.title} at {work.company}
+                  </div>
+                )}
+              </div>
             </div>
-            {location && (
-              <div className="location-div">
-                {location.city}, {location.state}
-              </div>
-            )}
-            {work && (
-              <div className="work-div">
-                {work.title} at {work.company}
-              </div>
-            )}
+
             {status && <div className="status-div">{status}</div>}
             {id === currentUser.uid && updateStatusDiv}
-            <div className="wall">
-              {wallPostDiv}
-              <div id="wall-name">
-                {first}'{first[-1] !== 's' && 's'} Wall
-              </div>
-              {wallDiv}
-            </div>
           </div>
+          <div id="action-div-top">{actionDiv}</div>
         </div>
-        {actionDiv}
+      </div>
+
+      <div id="wall-container">
+        <div className="wall">
+          {wallPostDiv}
+          <div id="wall-name">
+            {first}'{first[-1] !== 's' && 's'} Wall
+          </div>
+          {wallDiv}
+        </div>
       </div>
       {/* <div className="profile-container"></div> */}
     </div>

@@ -1,8 +1,10 @@
 .sign-container {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap:100px;
     align-items: center;
+    margin-top: 60px;
 }
 
 .sign-left > h1 {
@@ -70,4 +72,24 @@
 
 .sign-up a:hover{
     text-decoration: underline;
+}
+
+@media only screen and (max-width: 600px)  {
+    .sign-container {
+        gap:10px;
+        margin-top: 20px;
+    }
+
+    .sign-left {
+        display: none;
+    }
+    .sign-up {
+        max-width: 240px;
+        padding: 20px;
+    }
+
+    .sign-up > h2 {
+        margin: 2px 0 24px 0;
+    }
+
 }

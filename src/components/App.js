@@ -79,7 +79,9 @@ function App() {
           </Routes>
         </AuthProvider>
       </Router>
-      <Footer />
+      <div className="bottom-margin">
+        <Footer />
+      </div>
     </div>
   );
 }
