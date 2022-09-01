@@ -137,12 +137,16 @@
     flex-wrap: wrap;
 }
 
-.edit input, #status {
+.edit input, select, #status {
     font-size: 20px;
     margin: 6px;
     border: none;
     padding: 6px;
     border-radius: 15px;
+}
+
+select {
+    background-color: white;
 }
 
 #status {

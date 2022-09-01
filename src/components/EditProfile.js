@@ -8,6 +8,7 @@ import { storage } from './firebaseConfig';
 import { ref, uploadBytes } from 'firebase/storage';
 
 import '../styles/profile.css';
+import { states } from '../states';
 
 const EditProfile = () => {
   const original = useRef({});
@@ -31,6 +32,12 @@ const EditProfile = () => {
   const { currentUser } = useAuth();
 
   const navigate = useNavigate();
+
+  const stateOptions = [{ name: '', abbreviation: '' }, ...states];
+
+  const [stateSelected, setStateSelected] = useState(
+    stateOptions[0].abbreviation
+  );
 
   const getUserData = async () => {
     const docRef = doc(db, 'users', currentUser.uid);
@@ -94,8 +101,7 @@ const EditProfile = () => {
 
   const handleSubmit = async (e) => {
     setLoading(true);
-    // TODO: update wall. on load save each variable, on submit check if changed
-    // and update wall feed if changed
+
     e.preventDefault();
     let newInfo = { work: {}, location: {} };
 
@@ -312,18 +318,26 @@ const EditProfile = () => {
               </div>
               <div>
                 <label>
-                  {/* TODO change input to drop-down menu */}
                   State:
-                  <input
-                    maxLength={2}
-                    value={location.state}
-                    onChange={(e) =>
+                  <select
+                    value={stateSelected}
+                    onChange={(e) => {
+                      setStateSelected(e.target.value);
                       setLocation({
                         city: location.city,
                         state: e.target.value,
-                      })
-                    }
-                  />
+                      });
+                    }}
+                  >
+                    {stateOptions.map((option) => (
+                      <option
+                        key={option.abbreviation}
+                        value={option.abbreviation}
+                      >
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
                 </label>
               </div>
             </div>
