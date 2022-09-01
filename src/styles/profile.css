@@ -259,6 +259,8 @@ select {
         flex-direction: column;
         align-items: center;
         padding: 10px;
+        max-width: 85vw;
+        margin: 0 auto;
     }
 
     #action-div-top {
@@ -310,6 +312,5 @@ select {
         text-align: center;
         padding: 20px 10px;
     }
-
 
 }
