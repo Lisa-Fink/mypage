@@ -259,12 +259,15 @@ select {
         flex-direction: column;
         align-items: center;
         padding: 10px;
-        max-width: 85vw;
         margin: 0 auto;
     }
 
     #action-div-top {
         display:none;
+    }
+
+    .edit input {
+        width:80%;
     }
 
     .profile-left {
